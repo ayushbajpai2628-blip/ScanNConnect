@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scan N Connect</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Gemini_Generated_Image_5anhvj5anhvj5anh.png" />
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CryptoJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: url('Gemini_Generated_Image_az98kbaz98kbaz98.png') center/cover no-repeat fixed;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 15, 25, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: -1;
+    }
+
+    .brand-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #00e6ff, #8a2be2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 25px;
+    }
+
+    .profile-box {
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #00e6ff;
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 25px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.45);
+      color: #00e6ff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .social-link:hover {
+      background: #00e6ff;
+      color: #000;
+      transform: translateX(6px);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+    }
+
+    button {
+      margin-top: 10px;
+      background: #00e6ff;
+      font-weight: 600;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid min-vh-100">
+  <div class="row min-vh-100 align-items-center">
+
+    <!-- LEFT PROFILE -->
+    <div class="col-lg-6 d-flex flex-column align-items-center text-center p-5">
+      <div class="brand-title">Scan N Connect</div>
+      <h2 style="color:white;" class="mb-4">Ashutosh Dixit</h2>
+
+      <div class="profile-box d-flex gap-3 align-items-center">
+        <img src="WhatsApp Image 2025-12-14 at 20.26.31_b18d1cc4.jpg" class="profile-img" alt="Profile">
+        <p style="color:white;" class="mb-0 opacity-75">
+          Hey! Welcome to my cool, modern platform where my professional journey and personal vibe come together.
+</p>
+      </div>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="col-lg-6 p-5">
+      <div class="glass">
+
+        <h4 style="color:white;" class="mb-3">Personal <i class="fa-solid fa-user-group"></i></h4>
+        <input type="password" id="personalPass" placeholder="Personal access key">
+        <button onclick="unlock('personal')">Unlock</button>
+        <div id="personalLinks" class="hidden">
+          <a class="social-link" href="#"><i class="bi bi-instagram"></i> Instagram</a>
+          <a class="social-link" href="#"><i class="bi bi-snapchat"></i> Snapchat</a>
+          <a class="social-link" href="#"><i class="bi bi-telegram"></i> Telegram</a>
+          <a class="social-link" href="#"><i class="bi bi-twitter-x"></i> X (Twitter)</a>
+          <a class="social-link" href="#"><i class="bi bi-facebook"></i> Facebook</a>
+        </div>
+
+        <hr class="my-4 opacity-25">
+
+        <h4 style="color:white;" class="mb-3">Professional <i class="fa-solid fa-user-tie"></i></h4>
+        <input type="password" id="professionalPass" placeholder="Professional access key">
+        <button onclick="unlock('professional')">Unlock</button>
+        <div id="professionalLinks" class="hidden">
+          <a class="social-link" href="#"><i class="bi bi-linkedin"></i> LinkedIn</a>
+          <a class="social-link" href="#"><i class="bi bi-github"></i> GitHub</a>
+          <a class="social-link" href="#"><i class="bi bi-globe"></i> Portfolio</a>
+          <a class="social-link" href="#"><i class="fa-regular fa-envelope"></i> Email</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const encryptedKeys = {
+    personal: CryptoJS.AES.encrypt("personal123", "scanconnect").toString(),
+    professional: CryptoJS.AES.encrypt("professional123", "scanconnect").toString()
+  };
+
+  function unlock(type) {
+    const input = document.getElementById(type + 'Pass').value;
+    const decrypted = CryptoJS.AES.decrypt(encryptedKeys[type], "scanconnect").toString(CryptoJS.enc.Utf8);
+
+    if (input === decrypted) {
+      document.getElementById(type + 'Links').classList.remove('hidden');
+    } else {
+      alert('Invalid access key');
+    }
+  }
+</script>
+
+</body>
+</html>
